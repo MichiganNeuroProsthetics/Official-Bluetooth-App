@@ -1,8 +1,27 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
 export default function TabBar() {
   return (
+    // <Tab.Navigator
+    //   tabBarOptions={{
+    //     showLabel: false,
+    //     style: {
+    //       position: 'absolute',
+    //       height: 90
+    //     }
+
+    //   }}>
+    //   <Tab.Screen name="Home" component={}/>
+    //   <Tab.Screen name="User" component={}/>
+    //   <Tab.Screen name="Microphone" component={<Icon icon = "microphone" />}/>
+    //   <Tab.Screen name="Gear" component={<Icon icon = "gear" />}/>
+    //   <Tab.Screen name="Analytics" component={<Icon icon = "chart" />}/>
+    // </Tab.Navigator>
     <View 
         style = {{
             flexDirection: "row",
@@ -25,6 +44,6 @@ const Icon = (props) => (
         marginBottom: 3, 
         alignSelf: "center"
     }} />
-    <Text>{props.text}</Text>
+    {/* <Text>{props.text}</Text> */}
     </View>
 );
