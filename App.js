@@ -26,6 +26,7 @@ export default function App() {
 
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
+          // headerShown: false,
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: '#313639',
           tabBarStyle: [
@@ -79,11 +80,4 @@ export default function App() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+
