@@ -1,14 +1,18 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { View, Text, SafeAreaView  } from 'react-native'
 import Header from "../components/Header"
 import TabBar from '../components/TabBar'
 import { Divider } from 'react-native-elements'
-export default function Home() {
+const Home = () => {
   return (
-    <View>
-      <Header/>
-      <Divider width = {1}/>
-      <TabBar/>
-    </View>
+    <SafeAreaView style = {{alignItem: 'center', justifyContent: 'center'}}>
+      <Text
+      style = {{
+        fontSize: 26,
+        fontWeight: 'bold'
+      }}>Home</Text>
+    </SafeAreaView>
   )
 }
+
+export default Home

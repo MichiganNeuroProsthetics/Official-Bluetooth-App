@@ -15,7 +15,9 @@ export default function TabBar() {
     //       height: 90
     //     }
 
-    //   }}>
+    //   }}
+
+    //   >
     //   <Tab.Screen name="Home" component={}/>
     //   <Tab.Screen name="User" component={}/>
     //   <Tab.Screen name="Microphone" component={<Icon icon = "microphone" />}/>
