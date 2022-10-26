@@ -22,8 +22,6 @@ export default function App() {
   return (
     <NavigationContainer>
        <Tab.Navigator
-
-
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
           headerStyle: {
