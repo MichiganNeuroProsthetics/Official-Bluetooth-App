@@ -29,18 +29,25 @@ export default function App() {
             borderBottomLeftRadius: 50,
             borderBottomRightRadius: 50,
             backgroundColor: '#ffffff',
-            shadowColor: '#000',
             elevation: 25,
           },
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: 20,
           },
           headerLeft: () => (
             <Ionicons
               name="person-circle-outline"
-              size={25}
+              size={45}
               style={{ alignSelf: "center" }} />
           ),
+          headerRight: () => (
+            <Ionicons
+              name="battery-half-sharp"
+              size={45}
+              style={{ alignSelf: "center" }} />
+          ),
+
           // headerShown: false,
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: '#313639',
@@ -94,5 +101,4 @@ export default function App() {
     
   );
 }
-
 
