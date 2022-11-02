@@ -20,7 +20,7 @@ export default function Speech() {
                         style={styles.modalButton}
                         onPress={() => setModalVisible(!modalVisible)}
                     >
-                        <Text style={styles.buttonText}>Done</Text>
+                        <Text style={styles.modalButtonText}>Done</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -53,9 +53,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '50%',
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
     },
     buttonText: {
+        color: 'blue',
+        fontSize: 18,
+    },
+    modalButtonText: {
         color: 'white',
         fontSize: 18,
     },
