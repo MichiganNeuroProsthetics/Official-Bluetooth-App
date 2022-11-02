@@ -4,7 +4,7 @@ import { NavigationContainer,DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TabBar from './components/TabBar';
-
+import {images} from './constants';
 //Import Screens
 import Home from "./pages/Home";
 import Settings from './pages/Settings';
@@ -20,7 +20,7 @@ const settingsName = 'Settings';
 const dataName = 'Analytics';
 
 const Tab = createBottomTabNavigator();
-const background = {uri:"https://raw.githubusercontent.com/MichiganNeuroProsthetics/Official-Bluetooth-App/main/assets/mosaic.png"}
+// const background = {uri:"https://raw.githubusercontent.com/MichiganNeuroProsthetics/Official-Bluetooth-App/main/assets/mosaic.png"}
 
 const transparentTheme = {
   ...DefaultTheme,
@@ -34,7 +34,7 @@ function App() {
   return (
     // <Test/>
     <ImageBackground 
-    source={background}
+    source={images.mosaic}
         resizeMode="cover"
         style = {styles.image}>
     <NavigationContainer theme = {transparentTheme}>
