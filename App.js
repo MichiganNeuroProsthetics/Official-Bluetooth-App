@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {StyleSheet, Image, ImageBackground } from 'react-native'
+import { NavigationContainer,DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TabBar from './components/TabBar';
@@ -19,10 +20,24 @@ const settingsName = 'Settings';
 const dataName = 'Analytics';
 
 const Tab = createBottomTabNavigator();
-export default function App() {
+const background = {uri:"https://raw.githubusercontent.com/MichiganNeuroProsthetics/Official-Bluetooth-App/main/assets/mosaic.png"}
+
+const transparentTheme = {
+  ...DefaultTheme,
+  colors: {
+      ...DefaultTheme.colors,
+      background: 'transparent',
+  },
+};
+
+function App() {
   return (
     // <Test/>
-    <NavigationContainer>
+    <ImageBackground 
+    source={background}
+        resizeMode="cover"
+        style = {styles.image}>
+    <NavigationContainer theme = {transparentTheme}>
        <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -100,7 +115,22 @@ export default function App() {
 
       </Tab.Navigator>
     </NavigationContainer>
+    </ImageBackground>
     
   );
 }
+export default App;
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    // transform: [{ rotate: '45deg' }]
+  }, 
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold'
+  }
+})
 
