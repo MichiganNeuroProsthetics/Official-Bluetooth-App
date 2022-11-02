@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import Speech from './pages/Speech';
 import User from './pages/User';
 import Analytics from './pages/Analytics';
+import Test from './pages/Test';
 // Screen Names
 const homeName = 'Home';
 const userName = 'User';
@@ -20,6 +21,7 @@ const dataName = 'Analytics';
 const Tab = createBottomTabNavigator();
 export default function App() {
   return (
+    // <Test/>
     <NavigationContainer>
        <Tab.Navigator
         initialRouteName={homeName}
