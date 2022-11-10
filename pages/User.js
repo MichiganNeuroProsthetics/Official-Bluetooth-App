@@ -1,13 +1,32 @@
 import React from 'react'
-import { View, Text, SafeAreaView  } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+import ButtonComp from '../components/Button-comp';
 
-const User = () => {
+const User = ({ navigation }) => {
   return (
-    <SafeAreaView>
-        <Text>User</Text>
-    </SafeAreaView>
-    
-  )
-}
+    <View style={styles.container}>
+      <SafeAreaView style={{ marginHorizontal: 16 }}>
+        <ButtonComp
+          btnText="Tips"
+          onClick={() => navigation.navigate("Tips")}
+        />
+      </SafeAreaView>
+    </View>
+  );
+};
 
-export default User
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-evenly'
+  },
+  btnStyle: {
+    backgroundColor: 'black',
+    height: 42,
+    width: '100%',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
+export default User;

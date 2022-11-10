@@ -9,15 +9,17 @@ import TabBar from './components/TabBar';
 import Home from "./pages/Home";
 import Settings from './pages/Settings';
 import Speech from './pages/Speech';
-import User from './pages/User';
 import Analytics from './pages/Analytics';
 import Test from './pages/Test';
+import Tips from './pages/Tips';
+import UserStackScreen from './components/UserStackScreen';
 // Screen Names
 const homeName = 'Home';
 const userName = 'User';
 const speechName = 'Speech';
 const settingsName = 'Settings';
 const dataName = 'Analytics';
+const tipsName = 'Tips';
 
 const Tab = createBottomTabNavigator();
 const background = {uri:"https://raw.githubusercontent.com/MichiganNeuroProsthetics/Official-Bluetooth-App/main/assets/mosaic.png"}
@@ -108,7 +110,7 @@ function App() {
         >
 
         <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={userName} component={User} />
+        <Tab.Screen name={userName} component={UserStackScreen} />
         <Tab.Screen name={speechName} component={Speech} />
         <Tab.Screen name={settingsName} component={Settings} />
         <Tab.Screen name={dataName} component={Analytics} />
