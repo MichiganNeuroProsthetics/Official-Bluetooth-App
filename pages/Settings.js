@@ -9,17 +9,25 @@ const Settings = () => {
 
           <TouchableOpacity style={styles.updateButton}>
             <Icon icon = "wrench" text = "update" />
-            <View style={styles.updateButtonTextContainer}>
-              <Text style={styles.updateButtonText}>New Update</Text>
-              <Text style={styles.updateButtonText}>V3.1.5</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>New Update</Text>
+              <Text style={styles.text}>V3.1.5</Text>
             </View>
           </TouchableOpacity>
 
-          <View style={styles.textContainer}>
+          <View style={styles.descriptionContainer}>
             <Text>Description of new update.</Text>
           </View>
-
         </View>
+
+        <View style={styles.card}>
+          <View style={styles.titleContainer}>
+            <Icon icon = "hand-point-right" text = "update"/>
+            <Text style={styles.titleText}>Flexing Patterns</Text>
+          </View>
+        </View>
+
+
       </View>
     )
 }
@@ -35,11 +43,12 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 30,
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    height: 200,
-    width: 320,
+    height: 180,
+    width: 310,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 30,
   },
   updateButton: {
     display: 'flex',
@@ -55,17 +64,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
   },
-  updateButtonTextContainer: {
+  textContainer: {
     display: 'flex',
     flexDirection: 'column',
     marginLeft: 30,
+    margin: 20,
   },
-  updateButtonText: {
+  text: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  textContainer: {
+  descriptionContainer: {
     margin: 20,
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'row',    
+  },
+  titleText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 20,
   }
 });
 
