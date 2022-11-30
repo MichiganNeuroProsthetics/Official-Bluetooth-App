@@ -42,12 +42,14 @@ function App() {
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
           headerStyle: {
+
             height: 150,
             borderBottomLeftRadius: 50,
             borderBottomRightRadius: 50,
             backgroundColor: '#ffffff',
             elevation: 25,
           },
+          // headerStyle: {route.name == homeName ? styles.homeHeader: styles.otherHeader},
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 20,

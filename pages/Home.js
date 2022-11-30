@@ -5,38 +5,35 @@ import Header from "../components/Header"
 import TabBar from '../components/TabBar'
 import { Divider } from 'react-native-elements'
 import {images} from '../constants'
+import { ScalingDot,
+  SlidingBorder,
+  ExpandingDot,
+  SlidingDot } from 'react-native-animated-pagination-dots'
 
 
 const {width, height } = Dimensions.get('screen');
 const data = [
-  // 'https://cdn.dribbble.com/users/3281732/screenshots/7003560/media/48d5ac3503d204751a2890ba82cc42ad.jpg?compress=1&resize=1200x1200',
-  // 'https://cdn.dribbble.com/users/3281732/screenshots/6727912/samji_illustrator.jpeg?compress=1&resize=1200x1200',
-  // 'https://cdn.dribbble.com/users/3281732/screenshots/13661330/media/1d9d3cd01504fa3f5ae5016e5ec3a313.jpg?compress=1&resize=1200x1200'
-  "https://raw.githubusercontent.com/erjiayu/MNP-App/main/Asset.png",
-  "https://raw.githubusercontent.com/erjiayu/MNP-App/main/Asset.png",
-  "https://raw.githubusercontent.com/erjiayu/MNP-App/main/Asset.png",
-  // images.card,
-  // images.card,
-  // images.card
-];
+  {
+    id: 1,
+    name: 'Modes',
+    component: "https://raw.githubusercontent.com/erjiayu/MNP-App/main/Asset.png",
+  },
+  {
+    id: 2,
+    name: 'Battery',
+    component: "https://raw.githubusercontent.com/erjiayu/MNP-App/main/Asset.png",
+  },
+  {
+    id: 3,
+    name: 'Blank',
+    component: "https://raw.githubusercontent.com/erjiayu/MNP-App/main/Asset.png",
+  }];
 
-  //   id: 1,
-  //   name: 'Modes',
-  //   component: images.card
-  // },
-  // {
-  //   id: 2,
-  //   name: 'Battery',
-  //   component: images.card
-  // },
-  // {
-  //   id: 3,
-  //   name: 'Blank',
-  //   component: images.card
-  // }];
-
-const cardWidth = width * 0.9
-const cardHeight = height * 0.6
+const CARDWIDTH = width * 0.85
+const CARDHEIGHT = height * 0.6
+const DOTSIZE = 10
+const DOT_SPACING = 10
+const DOT_IND_SIZE = DOTSIZE 
 // const renderItems = ({item}) => {
 //   return(
 //     <View>
@@ -72,10 +69,45 @@ const Home = () => {
         pagingEnabled
         renderItem = {({item}) => {
           return <View style = {styles.carousel}> 
-            <Image source = {{uri:item}} style={styles.card}/>
+            <Image source = {{uri:item.component}} style={styles.card}/>
             </View>
         }}
         />
+        <View style={styles.paging}>
+          <SlidingDot
+            marginHorizontal={10}
+            containerStyle={styles.dotsContainer}
+            data={data}
+            scrollX={scrollX}
+            dotSize={12}
+            dotStyle= {styles.slidingDots}
+            slidingIndicatorStyle = {styles.slidingDots}
+          />
+          {/* <ExpandingDot
+            data = {data}
+            expandingDotWidth={30}
+            scrollX={scrollX}
+            inActiveDotColor={'#347af0'}
+            activeDotColor={'#347af0'}
+            inActiveDotOpacity={0.5}
+            dotStyle={styles.slidingDots}
+            containerStyle={styles.dotsContainer} */}
+        {/* <View style={styles.pagination}>
+          {data.map((_,index) => {
+            return <View 
+              key={index}
+              style = {[styles.dots]}
+            />
+          })}
+          <Animated.View style={[styles.indicator, {
+                transform: [{
+                  translateX: Animated.divide(scrollX, CARDWIDTH).interpolate({
+                    inputRange: [0,1],
+                    outputRange: [0,DOT_IND_SIZE]
+                  })
+                }]
+              }]} /> */}
+        </View>
       </View>
     </View>
     
@@ -125,10 +157,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // width: "80%",
     // height: "50%",
-    width: cardWidth,
-    height: cardHeight,
+    width:  CARDWIDTH,
+    height: CARDHEIGHT,
     resizeMode: "contain",
-    marginLeft: 7,
+    // marginLeft: 
     // transform: [{ rotate: '45deg' }]
   }, 
   greeting: {
@@ -147,10 +179,13 @@ const styles = StyleSheet.create({
   carousel: {
     flex: 2,
     width:width,
-    height: cardHeight,
+    height: CARDHEIGHT,
     justifyContent: "center",
     alignItems: "center",
     resizeMode:"contain",
+    paddingTop: 20,
+    // paddingHorizontal: 20
+
   },
   banner:{
     // flex: 1,
@@ -159,5 +194,48 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderBottomLeftRadius: 80,
     borderBottomRightRadius: 80,
+  },
+  pagination:{
+    position: 'absolute',
+    top: CARDHEIGHT * 0.27,
+    flexDirection: "row"
+    // left: width * 0.5
+  },
+  dots:{
+    width: DOTSIZE,
+    height: DOTSIZE,
+    borderRadius: DOTSIZE,
+    backgroundColor: 'hsla(0, 0%, 90%, 0.5)',
+    margin: DOT_SPACING,
+    // borderRadius: DOT_IND_SIZE,
+    // borderWidth: 1,
+    borderColor: "white",
+    // position: 'absolute',
+  },
+  indicator:{
+    width: DOT_IND_SIZE,
+    height: DOT_IND_SIZE,
+    borderRadius: DOT_IND_SIZE,
+    backgroundColor: 'white',
+    // borderWidth: 1,
+    // borderColor: "#333",
+    position: 'absolute',
+    // top: -DOTSIZE /2,
+    // bottom: -DOTSIZE /2,
+  },
+  dotsContainer: {
+    // top: 50,
+    position: 'absolute',
+    marginBottom: CARDHEIGHT * 0.6
+
+  },
+  slidingDots: {
+    // justifyContent: 'center',
+    // alignSelf: 'center',
+    inactiveDotOpacity: 0.9,
+    backgroundColor: 'white',
+  },
+  paging: {
+    backgroundColor: 'white',
   }
 })
