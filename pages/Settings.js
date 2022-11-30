@@ -3,6 +3,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 
 const Settings = () => {
+
     return (
       <View style={styles.container}>
         <View style={styles.card}>
@@ -20,10 +21,22 @@ const Settings = () => {
           </View>
         </View>
 
-        <View style={styles.card}>
+        <View style={styles.patternCard}>
           <View style={styles.titleContainer}>
             <Icon icon = "hand-point-right" text = "update"/>
             <Text style={styles.titleText}>Flexing Patterns</Text>
+          </View>
+
+          <View style={styles.patternContainer}>
+            <TouchableOpacity style={styles.patternButton}>
+              <Text style={styles.bodyText}>Pattern 1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.patternButton}>
+              <Text style={styles.bodyText}>Pattern 2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.patternButton}>
+              <Text style={styles.bodyText}>Pattern 3</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -85,6 +98,37 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 20,
+  },
+  patternCard: {
+    borderRadius: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    height: 220,
+    width: 350,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 30,
+  },
+  patternContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  patternButton: {
+    backgroundColor: 'white',
+    margin: 10,
+    height: 120,
+    width: 90,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 2,
+    shadowColor: 'rgba(0,0,0, .25)', // IOS
+    shadowOffset: { height: 1, width: 0 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+  },
+  bodyText: {
+    fontSize: 16
   }
 });
 
