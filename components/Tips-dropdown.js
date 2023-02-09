@@ -42,10 +42,14 @@ const DropDown = ({
                             onPress={() => onSelectedItem(val)}
                             style={{
                                 backgroundColor: ((value != null) && (value.id == val.id)) ? '#D3D3D3' : 'white',
-                                padding: 8,
-                                minHeight: 42,
+                                fontSize: 40,
+                                fontWeight: 'bold',
+                                borderRadius: 20,
+                                marginHorizontal: 20,
+                                opacity: 0.8,
                                 justifyContent: 'center',
-                                alignItems: 'center',
+                                fontSize: 20,
+                                fontWeight: 'bold',
                             }}
                         >
                             <Text style={styles.optionTextStyle}>{val.name}</Text>
@@ -56,19 +60,21 @@ const DropDown = ({
             <View>
                 <FlatList
                     data={tipsData.filter((item) => item.label == value.name)}
-                    renderItem={({item}) => 
-                    <Text
-                    style={{
-                        backgroundColor: 'white',
-                        padding: 8,
-                        justifyContent: 'center',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                        marginTop: 8
-                        
-                    }}
-                > {item.name} </Text>}
-                    />
+                    renderItem={({ item }) =>
+                        <Text style={styles.tipsTextStyle}>
+                            <Text
+                                style={{
+                                    fontWeight: 'bold',
+                                    fontSize: 20,
+                                }}
+                            >   {item.name}
+                            </Text>
+                            <Text>
+                                {"\n\n"}
+                                {item.description}
+                            </Text>
+                        </Text>}
+                />
                 {/* {tipsData.map((val, i) => printTip(val, i))} */}
             </View>
         </View>
@@ -80,21 +86,45 @@ const styles = StyleSheet.create({
     dropDownStyle: {
         backgroundColor: 'white',
         padding: 8,
-        borderRadius: 6,
-        minHeight: 42,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        minHeight: 60,
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 6,
+        marginHorizontal: 20,
+        opacity: 0.8,
     },
     selectedTextStyle: {
         fontSize: 30,
         fontWeight: 'bold',
+        borderRadius: 20,
+        marginHorizontal: 20,
+        opacity: 0.8,
     },
     optionTextStyle: {
         fontSize: 20,
         fontWeight: 'bold',
+        borderBottomLeftRadius: 20,
+        borderBottomEndRadius: 20,
+        marginHorizontal: 20,
+        opacity: 0.8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        padding: 8
     },
+    tipsTextStyle: {
+        backgroundColor: 'white',
+        padding: 8,
+        justifyContent: 'center',
+        fontSize: 18,
+        marginTop: 8,
+        borderRadius: 20,
+        height: 200,
+        marginHorizontal: 30,
+    }
 });
 
 export default DropDown;

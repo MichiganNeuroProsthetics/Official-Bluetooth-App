@@ -14,19 +14,23 @@ let tips_options = [{
 let tips_list = [{
   id: 1,
   name: "Tip 1",
+  description: "This is tip 1's text",
   label: "App"
 
 }, {
   id: 2,
   name: "Tip 2",
+  description: "This is tip 2's text",
   label: "Arm",
 }, {
   id: 3,
   name: "Tip 3",
+  description: "This is tip 3's text",
   label: "Arm",
 }, {
   id: 4,
   name: "Tip 4",
+  description: "This is tip 4's text",
   label: "App",
 }
 ]
