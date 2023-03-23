@@ -32,6 +32,27 @@ let tips_list = [{
   name: "Tip 4",
   description: "This is tip 4's text",
   label: "App",
+}, {
+id: 5,
+name: "Tip 5",
+description: "This is tip 5's text",
+label: "App"
+
+}, {
+id: 6,
+name: "Tip 6",
+description: "This is tip 6's text",
+label: "Arm",
+}, {
+id: 7,
+name: "Tip 7",
+description: "This is tip 7's text",
+label: "Arm",
+}, {
+id: 8,
+name: "Tip 8",
+description: "This is tip 8's text",
+label: "App",
 }
 ]
 

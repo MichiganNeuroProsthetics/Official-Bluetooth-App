@@ -23,60 +23,60 @@ const DropDown = ({
                 activeOpacity={0.8}
                 onPress={() => setShowOption(!showOption)}
             >
-                <Text style={styles.selectedTextStyle}>{
+                <Text style={styles.dropDownStyle}>{
                     !!value ? value?.name : 'Choose an option'}</Text>
                 <Ionicons
-                    name="chevron-down-outline"
+                    name="chevron-up-outline"
                     size={30}
                     style={{
                         tansform: [{ rotate: showOption ? "0deg" : "270deg" }],
+                        color: 'cornflowerblue'
 
                     }} />
 
             </TouchableOpacity>
             {showOption && (<View>
                 {optionData.map((val, i) => {
-                    return (
-                        <TouchableOpacity
-                            key={String(i)}
-                            onPress={() => onSelectedItem(val)}
-                            style={{
-                                backgroundColor: ((value != null) && (value.id == val.id)) ? '#D3D3D3' : 'white',
-                                fontSize: 40,
-                                fontWeight: 'bold',
-                                borderRadius: 20,
-                                marginHorizontal: 20,
-                                opacity: 0.8,
-                                justifyContent: 'center',
-                                fontSize: 20,
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            <Text style={styles.optionTextStyle}>{val.name}</Text>
-                        </TouchableOpacity>
-                    )
+                    if (value.id != val.id) {
+                        return (
+                            <TouchableOpacity
+                                key={String(i)}
+                                onPress={() => onSelectedItem(val)}
+                                style={styles.optionTextStyle}
+                            >
+                                <Text style={styles.optionTextStyle}>{val.name}
+                                </Text>
+                            </TouchableOpacity>
+                        )
+                    }
                 })}
             </View>)}
-            <View>
-                <FlatList
-                    data={tipsData.filter((item) => item.label == value.name)}
-                    renderItem={({ item }) =>
-                        <Text style={styles.tipsTextStyle}>
-                            <Text
-                                style={{
-                                    fontWeight: 'bold',
-                                    fontSize: 20,
-                                }}
-                            >   {item.name}
+            <FlatList style={{
+                scrollsToTop: false,
+            }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                data={tipsData.filter((item) => item.label == value.name)}
+                renderItem={({ item }) =>
+                    <View
+                        style={styles.backgroundContainer}>
+                        <View style={styles.tipsTextStyle}>
+                            <Text style={styles.tipsTextStyle}>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+                                    }}
+                                >   {item.name}
+                                </Text>
+                                <Text>
+                                    {"\n\n"}
+                                    {item.description}
+                                </Text>
                             </Text>
-                            <Text>
-                                {"\n\n"}
-                                {item.description}
-                            </Text>
-                        </Text>}
-                />
-                {/* {tipsData.map((val, i) => printTip(val, i))} */}
-            </View>
+                        </View>
+                    </View>}
+            />
+
         </View>
     );
 };
@@ -92,38 +92,52 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 6,
+        marginTop: 10,
         marginHorizontal: 20,
         opacity: 0.8,
-    },
-    selectedTextStyle: {
         fontSize: 30,
-        fontWeight: 'bold',
-        borderRadius: 20,
-        marginHorizontal: 20,
-        opacity: 0.8,
+        fontWeight: 'bold'
     },
     optionTextStyle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        borderBottomLeftRadius: 20,
-        borderBottomEndRadius: 20,
+        backgroundColor: 'white',
+        padding: 8,
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+        minHeight: 60,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
         marginHorizontal: 20,
         opacity: 0.8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        padding: 8
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginVertical: 5,
     },
     tipsTextStyle: {
         backgroundColor: 'white',
-        padding: 8,
+        opacity: 1,
+        padding: 15,
+        minHeight: 175,
         justifyContent: 'center',
-        fontSize: 18,
-        marginTop: 8,
-        borderRadius: 20,
-        height: 200,
+        alignItems: 'center',
+        marginTop: 10,
         marginHorizontal: 30,
+        borderRadius: 30,
+        overflow: 'hidden',
+        zIndex: 1,
+        flex: 1
+    },
+    backgroundContainer: {
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        marginHorizontal: 20,
+        flex: 1
+    },
+    tipsBackground: {
+        backgroundColor: 'white',
+        opacity: 1,
+        marginHorizontal: 20,
+
     }
 });
 
