@@ -1,11 +1,11 @@
-import React, { Component, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
+import React, {Component, useState} from 'react'
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import DropDown from '../components/Tips-dropdown';
 
 let tips_options = [{
   id: 1,
   name: "App"
-}, {
+},{
   id: 2,
   name: "Arm"
 },
@@ -33,26 +33,26 @@ let tips_list = [{
   description: "This is tip 4's text",
   label: "App",
 }, {
-  id: 5,
-  name: "Tip 5",
-  description: "This is tip 5's text",
-  label: "App"
+id: 5,
+name: "Tip 5",
+description: "This is tip 5's text",
+label: "App"
 
 }, {
-  id: 6,
-  name: "Tip 6",
-  description: "This is tip 6's text",
-  label: "Arm",
+id: 6,
+name: "Tip 6",
+description: "This is tip 6's text",
+label: "Arm",
 }, {
-  id: 7,
-  name: "Tip 7",
-  description: "This is tip 7's text",
-  label: "Arm",
+id: 7,
+name: "Tip 7",
+description: "This is tip 7's text",
+label: "Arm",
 }, {
-  id: 8,
-  name: "Tip 8",
-  description: "This is tip 8's text",
-  label: "App",
+id: 8,
+name: "Tip 8",
+description: "This is tip 8's text",
+label: "App",
 }
 ]
 
@@ -64,21 +64,14 @@ const Tips = () => {
   }
 
   return (
-    <ScrollView style={{
-      backgroundColor: 'rgba(255,255,255,0.5)',
-      marginHorizontal: 20,
-      flex: 1,
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
-      marginTop: 10,
-    }}>
+    <SafeAreaView>
       <DropDown
         value={selectedItem}
         optionData={tips_options}
         onSelect={onSelect}
         tipsData={tips_list}
       />
-    </ScrollView>
+    </SafeAreaView>
 
   )
 }

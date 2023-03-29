@@ -26,7 +26,7 @@ const DropDown = ({
                 <Text style={styles.dropDownStyle}>{
                     !!value ? value?.name : 'Choose an option'}</Text>
                 <Ionicons
-                    name="chevron-down-outline"
+                    name="chevron-up-outline"
                     size={30}
                     style={{
                         tansform: [{ rotate: showOption ? "0deg" : "270deg" }],
@@ -42,7 +42,7 @@ const DropDown = ({
                             <TouchableOpacity
                                 key={String(i)}
                                 onPress={() => onSelectedItem(val)}
-                                style={styles.optionButtonStyle}
+                                style={styles.optionTextStyle}
                             >
                                 <Text style={styles.optionTextStyle}>{val.name}
                                 </Text>
@@ -51,10 +51,14 @@ const DropDown = ({
                     }
                 })}
             </View>)}
-            <FlatList 
+            <FlatList style={{
+                scrollsToTop: false,
+            }}
                 contentContainerStyle={{ flexGrow: 1 }}
                 data={tipsData.filter((item) => item.label == value.name)}
                 renderItem={({ item }) =>
+                    <View
+                        style={styles.backgroundContainer}>
                         <View style={styles.tipsTextStyle}>
                             <Text style={styles.tipsTextStyle}>
                                 <Text
@@ -69,7 +73,8 @@ const DropDown = ({
                                     {item.description}
                                 </Text>
                             </Text>
-                        </View> }
+                        </View>
+                    </View>}
             />
 
         </View>
@@ -87,37 +92,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
-        marginHorizontal: 0,
+        marginTop: 10,
+        marginHorizontal: 20,
         opacity: 0.8,
         fontSize: 30,
         fontWeight: 'bold'
     },
     optionTextStyle: {
         backgroundColor: 'white',
-        minHeight: 60,
-        justifyContent: 'center',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-        opacity: 0.8,
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    optionButtonStyle: {
-        backgroundColor: 'white',
+        padding: 8,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
         minHeight: 60,
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 0,
-        marginHorizontal: 0,
+        marginTop: 5,
+        marginHorizontal: 20,
         opacity: 0.8,
         fontSize: 30,
         fontWeight: 'bold',
-        shadowColor: 'gray',
-        shadowOpacity: 0.5
+        marginVertical: 5,
     },
     tipsTextStyle: {
         backgroundColor: 'white',
@@ -133,6 +128,17 @@ const styles = StyleSheet.create({
         zIndex: 1,
         flex: 1
     },
+    backgroundContainer: {
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        marginHorizontal: 20,
+        flex: 1
+    },
+    tipsBackground: {
+        backgroundColor: 'white',
+        opacity: 1,
+        marginHorizontal: 20,
+
+    }
 });
 
 export default DropDown;
