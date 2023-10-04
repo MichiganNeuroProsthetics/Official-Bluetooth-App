@@ -44,8 +44,8 @@ function App() {
           headerStyle: {
 
             height: 150,
-            borderBottomLeftRadius: 50,
-            borderBottomRightRadius: 50,
+            borderBottomLeftRadius: route.name === homeName ? 0 : 50,
+            borderBottomRightRadius: route.name === homeName ? 0 : 50,
             backgroundColor: '#ffffff',
             elevation: 25,
           },
