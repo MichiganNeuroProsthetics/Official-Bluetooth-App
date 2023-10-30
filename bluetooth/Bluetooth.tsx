@@ -9,6 +9,7 @@ const Bluetooth = () => {
 
     useEffect(() => {
         // Scan for BLE devices in range
+        // Phone's Bluetooth is turned on and ready to scan
         const subscription = manager.onStateChange((state) => {
           if (state === 'PoweredOn') {
             scanForDevices();
@@ -24,12 +25,14 @@ const Bluetooth = () => {
         try {
             const scanning = manager.startDeviceScan(
                 null, // List of uuids. if null, scans for all devices. 
-                null,
+                null, // Scanning filters
                 (error, scannedDevice) => {
                     if (error) {
                         console.error('Error finding devices:', error);
                         return;
                     }
+                    // Check if device already in devices list. 
+                    // If not, add to list of discovered devices
                     if (!devices.find((device) => device.id === scannedDevice.id)) {
                         setDevices((prevDevices) => [...prevDevices, scannedDevice])
                     }
@@ -43,6 +46,7 @@ const Bluetooth = () => {
     const connectToDevice = async (device) => {
         try {
           await device.connect();
+        // Attempts connection to device
           setConnectedDevice(device);
         } catch (error) {
           console.error('Error connecting: ', error);
@@ -65,7 +69,8 @@ const Bluetooth = () => {
             {connectedDevice && (
                 <View>
                 <Text>Connected to: {connectedDevice.name || 'Unnamed Device'}</Text>
-                {/* Add additional actions for the connected device */}
+                {/* Add additional actions for the connected device 
+                    Use manager.write(?) to send info to Arduino*/}
                 </View>
             )}
         </View>
