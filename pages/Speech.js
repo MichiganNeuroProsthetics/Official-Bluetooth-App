@@ -1,6 +1,43 @@
 import * as React from "react";
 import { useState } from "react";
 import { TouchableOpacity, StyleSheet, Text, View, Modal, Alert} from "react-native";
+import { Audio } from 'expo-av';
+// import * as Permissions from 'expo-permissions';
+//import { startRecording } from './vrMain.js';
+try{
+    await Audio.getPermissionsAsync(); 
+} catch (error){
+    console.log(error); 
+}
+
+//startAudio Function 
+startRecording = async () => {
+    //const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    //if (status !== 'granted') return;
+  
+    this.setState({ isRecording: true });
+    // some of these are not applicable, but are required
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: true,
+  
+    });
+    const user_audio = new Audio.Recording();
+    try {
+      await recording.prepareToRecordAsync(recordingOptions);
+      await recording.startAsync();
+    } catch (error) {
+      console.log(error);
+      this.stopRecording();
+    }
+    this.recording = user_audio;
+}
+
+
 
 export default function Speech() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -29,13 +66,15 @@ export default function Speech() {
         <View style={styles.container}>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => setModalVisible(true)}
+                onPress={() => startRecording()}
             >
                 <Text style={styles.buttonText}>Start Listening</Text>
             </TouchableOpacity>
         </View></>
     );
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -93,3 +132,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 });
+
+const recordingOptions = {
+    // android not currently in use, but parameters are required
+    android: {
+        extension: '.m4a',
+        outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+        audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
+        sampleRate: 44100,
+        numberOfChannels: 2,
+        bitRate: 128000,
+    },
+    ios: {
+        extension: '.wav',
+        audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
+        sampleRate: 44100,
+        numberOfChannels: 1,
+        bitRate: 128000,
+        linearPCMBitDepth: 16,
+        linearPCMIsBigEndian: false,
+        linearPCMIsFloat: false,
+    },
+};
