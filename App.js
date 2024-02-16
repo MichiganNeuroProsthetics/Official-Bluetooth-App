@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import Speech from './pages/Speech';
 import User from './pages/User';
 import Analytics from './pages/Analytics';
+import Bluetooth from './bluetooth/Bluetooth';
 import Test from './pages/Test';
 // Screen Names
 const homeName = 'Home';
@@ -18,6 +19,7 @@ const userName = 'User';
 const speechName = 'Speech';
 const settingsName = 'Settings';
 const dataName = 'Analytics';
+const blueName = 'Bluetooth';
 
 const Tab = createBottomTabNavigator();
 // const background = {uri:"https://raw.githubusercontent.com/MichiganNeuroProsthetics/Official-Bluetooth-App/main/assets/mosaic.png"}
@@ -31,6 +33,8 @@ const transparentTheme = {
 };
 
 function App() {
+  
+
   return (
     // <Test/>
     <ImageBackground 
@@ -38,6 +42,7 @@ function App() {
         resizeMode="cover"
         style = {styles.image}>
     <NavigationContainer theme = {transparentTheme}>
+      {/* <Bluetooth /> */}
        <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -94,11 +99,13 @@ function App() {
               iconName = focused ? 'settings' : 'settings-outline';
             } else if (rn === dataName) {
               iconName = focused ? 'analytics-sharp' : 'analytics-outline';
+            } else if (rn === blueName) {
+              iconName = focused ? 'bluetooth' : 'bluetooth-outline';
             }
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
-          },
+          }
         })
       }
         // tabBarOptions={{
@@ -114,6 +121,7 @@ function App() {
         <Tab.Screen name={speechName} component={Speech} />
         <Tab.Screen name={settingsName} component={Settings} />
         <Tab.Screen name={dataName} component={Analytics} />
+        <Tab.Screen name={blueName} component={Bluetooth} />
 
       </Tab.Navigator>
     </NavigationContainer>

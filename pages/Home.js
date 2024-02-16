@@ -1,6 +1,6 @@
 import React from 'react'
 import {StatusBar, View, Text, StyleSheet, SafeAreaView, Image, Dimensions, FlatList, Animated} from 'react-native'
-import Carousel, {Pagination} from 'react-native-snap-carousel'
+// import Carousel, {Pagination} from 'react-native-snap-carousel'
 import Header from "../components/Header"
 import TabBar from '../components/TabBar'
 import { Divider } from 'react-native-elements'
@@ -43,6 +43,9 @@ const DOT_IND_SIZE = DOTSIZE
 // }
 
 const Home = () => {
+  // return (
+  //   Home
+  // )
   const scrollX = React.useRef(new Animated.Value(0)).current;
   // const[index,setIndex] = useState(0);
   // const isCarousel = useRef(null);

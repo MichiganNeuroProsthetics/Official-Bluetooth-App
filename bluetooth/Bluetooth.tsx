@@ -56,7 +56,7 @@ const Bluetooth = () => {
     return (
         <View>
             <Text>Bluetooth Devices:</Text>
-            <FlatList
+            {/* <FlatList
                 data={devices}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
@@ -65,14 +65,14 @@ const Bluetooth = () => {
                     <Button title="Connect" onPress={() => connectToDevice(item)} />
                 </View>
                 )}
-            />
-            {connectedDevice && (
+            /> */}
+            {/* {connectedDevice && (
                 <View>
                 <Text>Connected to: {connectedDevice.name || 'Unnamed Device'}</Text>
-                {/* Add additional actions for the connected device 
-                    Use manager.write(?) to send info to Arduino*/}
+                
                 </View>
-            )}
+            )}; */}
+            
         </View>
     );
 };
