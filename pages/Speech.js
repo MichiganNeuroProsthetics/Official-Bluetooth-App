@@ -1,133 +1,76 @@
-import * as React from "react";
-import { useState } from "react";
-import { TouchableOpacity, StyleSheet, Text, View, Modal, Alert} from "react-native";
-import { Audio } from 'expo-av'
-// import * as Permissions from 'expo-permissions'
-
-startRecording = async () => {
-    // const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-    // if (status !== 'granted') return;
-    try {
-        console.log("requesting permissions");
-        await Audio.getPermissionsAsync();
-        console.log("permissions requested");
-    } catch (error) {
-        console.log(error);
-    }
-  
-    //this.setState({ isRecording: true });
-    // some of these are not applicable, but are required
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: true,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-      playThroughEarpieceAndroid: true,
-  
-    });
-    const user_audio = new Audio.Recording();
-    try {
-      await user_audio.prepareToRecordAsync(recordingOptions);
-      await user_audio.startAsync();
-    } catch (error) {
-      console.log(error);
-      this.stopRecording();
-    }
-    this.recording = user_audio;
-};
+import { useState } from 'react';
+import { View, StyleSheet, Button, Linking } from 'react-native';
+import { Audio } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
 
 export default function Speech() {
-    const [modalVisible, setModalVisible] = useState(false);
-    return (
-        <><Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
-                setModalVisible(!modalVisible);
-            } }>
-            <View style={styles.container}>
-                <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Listening now!</Text>
-                    <TouchableOpacity
-                        style={styles.modalButton}
-                        onPress={() => setModalVisible(!modalVisible)}
-                    >
-                        <Text style={styles.modalButtonText}>Done</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </Modal>
-        
-        <View style={styles.container}>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => startRecording()}
-            >
-                <Text style={styles.buttonText}>Start Listening</Text>
-            </TouchableOpacity>
-        </View></>
-    );
-}
+  const [recording, setRecording] = useState();
+  const [permissionResponse, requestPermission] = Audio.usePermissions();
 
-const styles = StyleSheet.create({
-    container: {
-        padding: 25, 
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '30%',
-    },
-    button: {
-        display: 'flex',
-        borderRadius: 40,
-        height: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '50%',
-        backgroundColor: 'white',
-    },
-    buttonText: {
-        color: 'blue',
-        fontSize: 18,
-    },
-    modalButtonText: {
-        color: 'white',
-        fontSize: 18,
-    },
-    modalView: {
-        width: '70%',
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-      },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-        fontSize: 18,
-    },
-    modalButton: {
-        width: 80,
-        height: 40,
-        backgroundColor: 'blue',
-        borderRadius: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
+  async function startRecording() {
+    try {
+      if (permissionResponse.status !== 'granted') {
+        console.log('Requesting permission..');
+        await requestPermission();
+      }
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        playsInSilentModeIOS: true,
+      });
+
+      console.log('Starting recording..');
+      const { recording } = await Audio.Recording.createAsync(recordingOptions);
+      setRecording(recording);
+      console.log('Recording started');
+    } catch (err) {
+      console.error('Failed to start recording', err);
     }
-});
+  }
+
+  async function stopRecording() {
+    console.log('Stopping recording..');
+    setRecording(undefined);
+    await recording.stopAndUnloadAsync();
+    await Audio.setAudioModeAsync(
+      {
+        allowsRecordingIOS: false,
+      }
+    );
+    const uri = recording.getURI();
+
+    // Create a file name for the recording
+    const fileName = `recording-${Date.now()}.caf`;
+
+    // Move the recording to the new directory with the new file name
+    await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
+    await FileSystem.moveAsync({
+      from: uri,
+      to: FileSystem.documentDirectory + 'recordings/' + `${fileName}`
+    });
+
+    // This is for simply playing the sound back
+    const playbackObject = new Audio.Sound();
+    await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${fileName}` });
+    await playbackObject.playAsync();
+
+    console.log('Recording stopped and stored at', FileSystem.documentDirectory + 'recordings/' + `${fileName}`); 
+  }
+
+  return (
+    <View style={styles.container}>
+      <Button
+        title={recording ? 'Stop Recording' : 'Start Recording'}
+        onPress={recording ? stopRecording : startRecording}
+      />
+      <Button
+        title="Reset Permissions"
+        onPress={() => { Linking.openURL('app-settings:') }}
+      >
+      Reset Permissions
+      </Button>
+    </View>
+  );
+}
 
 const recordingOptions = {
     // android not currently in use, but parameters are required
@@ -150,3 +93,12 @@ const recordingOptions = {
         linearPCMIsFloat: false,
     },
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    padding: 10,
+  },
+});
