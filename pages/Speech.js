@@ -102,3 +102,36 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+async function transcribeRecording() {
+  // TODO: get audio file from where it's stored
+  
+  const formData = new FormData();
+  formData.append("audio", audio_file);
+  axios({
+    url: "", // TODO: change to localhost, ping our python endpoint
+    method: "POST",
+    data: formData,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+    },
+  })
+    .then(function (response) {
+      console.log("response :", response);
+      // setTranscribedData((oldData: any) => [...oldData, response.data]);
+      // setLoading(false);
+      // setIsTranscribing(false);
+      // intervalRef.current = setInterval(
+      //   transcribeInterim,
+      //   transcribeTimeout * 1000
+      // );
+    })
+    .catch(function (error) {
+      console.log("error : error");
+    });
+
+  // if (!stopTranscriptionSessionRef.current) {
+  //   setIsRecording(true);
+  // }
+}
