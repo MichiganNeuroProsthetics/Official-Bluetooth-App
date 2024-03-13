@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { View, StyleSheet, Button, Linking } from 'react-native';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
+import axios from 'axios';
 
 export default function Speech() {
   const [recording, setRecording] = useState();
   const [permissionResponse, requestPermission] = Audio.usePermissions();
+  // const [uri, setUri] = useState("");
 
   async function startRecording() {
     try {
@@ -37,23 +39,75 @@ export default function Speech() {
       }
     );
     const uri = recording.getURI();
+    console.log("Got recording URI");
 
-    // Create a file name for the recording
-    const fileName = `recording-${Date.now()}.caf`;
+    const filetype = uri.split(".").pop();
+    const filename = uri.split("/").pop();
 
-    // Move the recording to the new directory with the new file name
-    await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
-    await FileSystem.moveAsync({
-      from: uri,
-      to: FileSystem.documentDirectory + 'recordings/' + `${fileName}`
-    });
+    const formData = new FormData();
+    // formData.append("language", selectedLangRef.current);
+    // formData.append("model_size", modelOptions[selectedModelRef.current]);
+    formData.append(
+      "audio_data",
+      {
+        uri,
+        type: `audio/${filetype}`,
+        name: filename,
+      },
+      "temp_recording"
+    );
+    console.log("Created formData with recording");
 
-    // This is for simply playing the sound back
-    const playbackObject = new Audio.Sound();
-    await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${fileName}` });
-    await playbackObject.playAsync();
+    // axios({
+    //   url: "http://127.0.0.1:5000/transcribe",
+    //   method: "POST",
+    //   data: formData,
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // })
+    //   .then(function (response) {
+    //     console.log("response :", response);
+    //     // setTranscribedData((oldData: any) => [...oldData, response.data]);
+    //     // setLoading(false);
+    //     // setIsTranscribing(false);
+    //     // intervalRef.current = setInterval(
+    //     //   transcribeInterim,
+    //     //   transcribeTimeout * 1000
+    //     // );
+    //   })
+    //   .catch(function (error) {
+    //     console.log("error : something went wrong when transcribing recording");
+    //     console.log(error);
+    //   });
 
-    console.log('Recording stopped and stored at', FileSystem.documentDirectory + 'recordings/' + `${fileName}`); 
+    console.log("trying fetch now");
+
+    fetch("http://127.0.0.1:5000/", {credentials: 'same-origin'})
+    .then((response) => {
+      console.log(response);
+    })
+
+
+    // // Create a file name for the recording
+    // const fileName = `recording-${Date.now()}.caf`;
+
+    // // Move the recording to the new directory with the new file name
+    // await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
+    // await FileSystem.moveAsync({
+    //   from: uri,
+    //   to: FileSystem.documentDirectory + 'recordings/' + `${fileName}`
+    // });
+
+    // setUri(recordingUri);
+
+    // // This is for simply playing the sound back
+    // const playbackObject = new Audio.Sound();
+    // await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${fileName}` });
+    // await playbackObject.playAsync();
+
+    // console.log('Recording stopped and stored at', FileSystem.documentDirectory + 'recordings/' + `${fileName}`); 
   }
 
   return (
@@ -103,35 +157,49 @@ const styles = StyleSheet.create({
   },
 });
 
-async function transcribeRecording() {
-  // TODO: get audio file from where it's stored
+// async function transcribeRecording() {
+//   // TODO: get audio file from where it's stored
+//   const recordingUri = uri
+//   const filetype = uri.split(".").pop();
+//   const filename = uri.split("/").pop();
   
-  const formData = new FormData();
-  formData.append("audio", audio_file);
-  axios({
-    url: "", // TODO: change to localhost, ping our python endpoint
-    method: "POST",
-    data: formData,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
-    },
-  })
-    .then(function (response) {
-      console.log("response :", response);
-      // setTranscribedData((oldData: any) => [...oldData, response.data]);
-      // setLoading(false);
-      // setIsTranscribing(false);
-      // intervalRef.current = setInterval(
-      //   transcribeInterim,
-      //   transcribeTimeout * 1000
-      // );
-    })
-    .catch(function (error) {
-      console.log("error : error");
-    });
+//   const formData = new FormData();
+//   // formData.append("language", selectedLangRef.current);
+//   // formData.append("model_size", modelOptions[selectedModelRef.current]);
+//   formData.append(
+//     "audio_data",
+//     {
+//       uri,
+//       type: `audio/${filetype}`,
+//       name: filename,
+//     },
+//     "temp_recording"
+//   );
 
-  // if (!stopTranscriptionSessionRef.current) {
-  //   setIsRecording(true);
-  // }
-}
+//   axios({
+//     url: "http://127.0.0.1:5000/transcribe/",
+//     method: "POST",
+//     data: formData,
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "multipart/form-data",
+//     },
+//   })
+//     .then(function (response) {
+//       console.log("response :", response);
+//       // setTranscribedData((oldData: any) => [...oldData, response.data]);
+//       // setLoading(false);
+//       // setIsTranscribing(false);
+//       // intervalRef.current = setInterval(
+//       //   transcribeInterim,
+//       //   transcribeTimeout * 1000
+//       // );
+//     })
+//     .catch(function (error) {
+//       console.log("error : error");
+//     });
+
+//   // if (!stopTranscriptionSessionRef.current) {
+//   //   setIsRecording(true);
+//   // }
+// }
