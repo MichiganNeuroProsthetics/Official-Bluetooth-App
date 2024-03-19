@@ -84,10 +84,11 @@ export default function Speech() {
 
     console.log("trying fetch now");
 
-    fetch("http://127.0.0.1:5000/", {credentials: 'same-origin'})
+    fetch("/")
     .then((response) => {
       console.log(response);
     })
+    .catch((e) => console.log(e))
 
 
     // // Create a file name for the recording

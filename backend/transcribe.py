@@ -14,6 +14,10 @@ def show_index():
     print("hello world")
     return "hello world"
 
+@app.route('/hello/')
+def hello():
+    return "hello world"
+
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
     print("inside transcribe endpoint")
@@ -44,4 +48,4 @@ def transcribe():
         return "This endpoint only processes POST wav blob"
     
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
