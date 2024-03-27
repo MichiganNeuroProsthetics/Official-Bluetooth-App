@@ -40,53 +40,33 @@ export default function Speech() {
     );
     const uri = recording.getURI();
     console.log("Got recording URI");
+    console.log(uri)
 
     const filetype = uri.split(".").pop();
+    console.log(filetype)
     const filename = uri.split("/").pop();
 
     const formData = new FormData();
     // formData.append("language", selectedLangRef.current);
     // formData.append("model_size", modelOptions[selectedModelRef.current]);
     formData.append(
-      "audio_data",
+      "audio",
       {
         uri,
         type: `audio/${filetype}`,
         name: filename,
-      },
-      "temp_recording"
+      }
     );
     console.log("Created formData with recording");
 
-    // axios({
-    //   url: "http://127.0.0.1:5000/transcribe",
-    //   method: "POST",
-    //   data: formData,
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // })
-    //   .then(function (response) {
-    //     console.log("response :", response);
-    //     // setTranscribedData((oldData: any) => [...oldData, response.data]);
-    //     // setLoading(false);
-    //     // setIsTranscribing(false);
-    //     // intervalRef.current = setInterval(
-    //     //   transcribeInterim,
-    //     //   transcribeTimeout * 1000
-    //     // );
-    //   })
-    //   .catch(function (error) {
-    //     console.log("error : something went wrong when transcribing recording");
-    //     console.log(error);
-    //   });
-
     console.log("trying fetch now");
 
-    fetch("/")
+    fetch("http://10.20.72.57:5000/transcribe/", {method: "POST", body: formData})
     .then((response) => {
-      console.log(response);
+      return response.json();
+    })
+    .then((json) => {
+      console.log(json.transcription)
     })
     .catch((e) => console.log(e))
 
