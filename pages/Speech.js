@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, Button, Linking } from 'react-native';
+import { View, StyleSheet, Button, Linking, Text } from 'react-native';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import axios from 'axios';
 export default function Speech() {
   const [recording, setRecording] = useState();
   const [permissionResponse, requestPermission] = Audio.usePermissions();
+  const [transcriptionReady, setTranscriptionReady] = useState(false);
+  const [transcription, setTranscription] = useState();
   // const [uri, setUri] = useState("");
 
   async function startRecording() {
@@ -61,12 +63,16 @@ export default function Speech() {
 
     console.log("trying fetch now");
 
-    fetch("http://10.20.72.57:5000/transcribe/", {method: "POST", body: formData})
+    // needs to be the second URL from the terminal when you start running the server
+    fetch("{Insert URL here}/transcribe/", {method: "POST", body: formData})
     .then((response) => {
       return response.json();
     })
     .then((json) => {
-      console.log(json.transcription)
+      setTranscription(json);
+      setTranscriptionReady(true);
+      // console.log(json.transcription);
+      console.log(transcription.transcription);
     })
     .catch((e) => console.log(e))
 
@@ -92,17 +98,32 @@ export default function Speech() {
   }
 
   return (
+    transcriptionReady ? 
     <View style={styles.container}>
       <Button
         title={recording ? 'Stop Recording' : 'Start Recording'}
         onPress={recording ? stopRecording : startRecording}
       />
-      <Button
+      <Text style={{textAlign: "center"}}>You said: {transcription.transcription}</Text>
+      {/* <Button
         title="Reset Permissions"
         onPress={() => { Linking.openURL('app-settings:') }}
       >
       Reset Permissions
-      </Button>
+      </Button> */}
+    </View>
+    :
+    <View style={styles.container}>
+      <Button
+        title={recording ? 'Stop Recording' : 'Start Recording'}
+        onPress={recording ? stopRecording : startRecording}
+      />
+      {/* <Button
+        title="Reset Permissions"
+        onPress={() => { Linking.openURL('app-settings:') }}
+      >
+      Reset Permissions
+      </Button> */}
     </View>
   );
 }
