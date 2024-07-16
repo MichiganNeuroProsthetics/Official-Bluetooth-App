@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { View, StyleSheet, Button, Linking, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
-import axios from 'axios';
 
 export default function Speech() {
   const [recording, setRecording] = useState();
@@ -49,8 +47,6 @@ export default function Speech() {
     const filename = uri.split("/").pop();
 
     const formData = new FormData();
-    // formData.append("language", selectedLangRef.current);
-    // formData.append("model_size", modelOptions[selectedModelRef.current]);
     formData.append(
       "audio",
       {
@@ -75,55 +71,37 @@ export default function Speech() {
       console.log(transcription.transcription);
     })
     .catch((e) => console.log(e))
-
-
-    // // Create a file name for the recording
-    // const fileName = `recording-${Date.now()}.caf`;
-
-    // // Move the recording to the new directory with the new file name
-    // await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
-    // await FileSystem.moveAsync({
-    //   from: uri,
-    //   to: FileSystem.documentDirectory + 'recordings/' + `${fileName}`
-    // });
-
-    // setUri(recordingUri);
-
-    // // This is for simply playing the sound back
-    // const playbackObject = new Audio.Sound();
-    // await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${fileName}` });
-    // await playbackObject.playAsync();
-
-    // console.log('Recording stopped and stored at', FileSystem.documentDirectory + 'recordings/' + `${fileName}`); 
   }
 
   return (
     transcriptionReady ? 
     <View style={styles.container}>
-      <Button
-        title={recording ? 'Stop Recording' : 'Start Recording'}
-        onPress={recording ? stopRecording : startRecording}
-      />
-      <Text style={{textAlign: "center"}}>You said: {transcription.transcription}</Text>
+      <View style={styles.card}>
+        <TouchableOpacity style={styles.updateButton} onPress={recording ? stopRecording : startRecording}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{recording ? 'Stop Recording' : 'Start Recording'}</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.transcriptionText}>You said: {transcription.transcription}</Text>
+        </View>
       {/* <Button
         title="Reset Permissions"
         onPress={() => { Linking.openURL('app-settings:') }}
       >
       Reset Permissions
       </Button> */}
+      </View>
     </View>
     :
     <View style={styles.container}>
-      <Button
-        title={recording ? 'Stop Recording' : 'Start Recording'}
-        onPress={recording ? stopRecording : startRecording}
-      />
-      {/* <Button
-        title="Reset Permissions"
-        onPress={() => { Linking.openURL('app-settings:') }}
-      >
-      Reset Permissions
-      </Button> */}
+      <View style={styles.card}>
+      <TouchableOpacity style={styles.updateButton} onPress={recording ? stopRecording : startRecording}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{recording ? 'Stop Recording' : 'Start Recording'}</Text>
+        </View>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -152,56 +130,52 @@ const recordingOptions = {
 
 const styles = StyleSheet.create({
   container: {
+    padding: 25, 
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 10,
+    width: '100%',
+  },
+  card: {
+    borderRadius: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    height: 180,
+    width: 310,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 30,
+  },
+  updateButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 250,
+    height: 75,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    flexDirection: 'row',
+    shadowColor: 'rgba(0,0,0, .25)', // IOS
+    shadowOffset: { height: 2, width: 0 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+  },
+  textContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: 30,
+    margin: 20,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  transcriptionText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  descriptionContainer: {
+    margin: 20,
   },
 });
-
-// async function transcribeRecording() {
-//   // TODO: get audio file from where it's stored
-//   const recordingUri = uri
-//   const filetype = uri.split(".").pop();
-//   const filename = uri.split("/").pop();
-  
-//   const formData = new FormData();
-//   // formData.append("language", selectedLangRef.current);
-//   // formData.append("model_size", modelOptions[selectedModelRef.current]);
-//   formData.append(
-//     "audio_data",
-//     {
-//       uri,
-//       type: `audio/${filetype}`,
-//       name: filename,
-//     },
-//     "temp_recording"
-//   );
-
-//   axios({
-//     url: "http://127.0.0.1:5000/transcribe/",
-//     method: "POST",
-//     data: formData,
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "multipart/form-data",
-//     },
-//   })
-//     .then(function (response) {
-//       console.log("response :", response);
-//       // setTranscribedData((oldData: any) => [...oldData, response.data]);
-//       // setLoading(false);
-//       // setIsTranscribing(false);
-//       // intervalRef.current = setInterval(
-//       //   transcribeInterim,
-//       //   transcribeTimeout * 1000
-//       // );
-//     })
-//     .catch(function (error) {
-//       console.log("error : error");
-//     });
-
-//   // if (!stopTranscriptionSessionRef.current) {
-//   //   setIsRecording(true);
-//   // }
-// }
