@@ -9,6 +9,10 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+**/__pycache__
 
 # macOS
 .DS_Store
+
+# virtual environment
+env/
