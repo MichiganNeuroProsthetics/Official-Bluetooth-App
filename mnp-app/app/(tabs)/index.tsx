@@ -1,7 +1,5 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image, Dimensions, Animated} from 'react-native'
-import { SlidingDot } from 'react-native-animated-pagination-dots'
-
 
 const {width, height } = Dimensions.get('screen');
 const data = [
@@ -26,18 +24,9 @@ const CARDHEIGHT = height * 0.6
 const DOTSIZE = 10
 const DOT_SPACING = 10
 const DOT_IND_SIZE = DOTSIZE 
-// const renderItems = ({item}) => {
-//   return(
-//     <View>
-//       <Image source={images.card} />
-//     </View>
-//   )
-// }
 
 const Home = () => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
-  // const[index,setIndex] = useState(0);
-  // const isCarousel = useRef(null);
   return (
     <View style = {styles.container}>
       <View style = {styles.banner}>
@@ -45,11 +34,9 @@ const Home = () => {
           Welcome Back, 
         </Text>
         <Text style = {[styles.user,{textAlign: 'right'}]}>
-          TEST
+          User
         </Text>
       </View>
-      <View style = {styles.carousel}> 
-      {/* <Image source = {images.card} style={styles.card}/> */}
       <Animated.FlatList
         data = {data}
          onScroll = {Animated.event(
@@ -65,44 +52,7 @@ const Home = () => {
             </View>
         }}
         />
-        <View style={styles.paging}>
-          <SlidingDot
-            marginHorizontal={10}
-            containerStyle={styles.dotsContainer}
-            data={data}
-            scrollX={scrollX}
-            dotSize={12}
-            dotStyle= {styles.slidingDots}
-            slidingIndicatorStyle = {styles.slidingDots}
-          />
-          {/* <ExpandingDot
-            data = {data}
-            expandingDotWidth={30}
-            scrollX={scrollX}
-            inActiveDotColor={'#347af0'}
-            activeDotColor={'#347af0'}
-            inActiveDotOpacity={0.5}
-            dotStyle={styles.slidingDots}
-            containerStyle={styles.dotsContainer} */}
-        {/* <View style={styles.pagination}>
-          {data.map((_,index) => {
-            return <View 
-              key={index}
-              style = {[styles.dots]}
-            />
-          })}
-          <Animated.View style={[styles.indicator, {
-                transform: [{
-                  translateX: Animated.divide(scrollX, CARDWIDTH).interpolate({
-                    inputRange: [0,1],
-                    outputRange: [0,DOT_IND_SIZE]
-                  })
-                }]
-              }]} /> */}
-        </View>
-      </View>
     </View>
-    
   )
 }
 
@@ -193,7 +143,7 @@ const styles = StyleSheet.create({
   slidingDots: {
     // justifyContent: 'center',
     // alignSelf: 'center',
-    inactiveDotOpacity: 0.9,
+    // inactiveDotOpacity: 0.9,
     backgroundColor: 'white',
   },
   paging: {
