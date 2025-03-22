@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    backgroundColor: 'rgb(99, 172, 232)',
   },
   card: {
     borderRadius: 30,
