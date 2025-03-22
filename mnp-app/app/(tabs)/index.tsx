@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: width,
-    height: height
+    height: height, 
+    backgroundColor: 'rgb(99, 172, 232)',
   },
   card: {
     flex: 1,
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
     resizeMode:"contain",
     paddingTop: 20,
     // paddingHorizontal: 20
-
   },
   banner:{
     // flex: 1,
@@ -105,48 +105,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderBottomLeftRadius: 80,
     borderBottomRightRadius: 80,
-  },
-  pagination:{
-    position: 'absolute',
-    top: CARDHEIGHT * 0.27,
-    flexDirection: "row"
-    // left: width * 0.5
-  },
-  dots:{
-    width: DOTSIZE,
-    height: DOTSIZE,
-    borderRadius: DOTSIZE,
-    backgroundColor: 'hsla(0, 0%, 90%, 0.5)',
-    margin: DOT_SPACING,
-    // borderRadius: DOT_IND_SIZE,
-    // borderWidth: 1,
-    borderColor: "white",
-    // position: 'absolute',
-  },
-  indicator:{
-    width: DOT_IND_SIZE,
-    height: DOT_IND_SIZE,
-    borderRadius: DOT_IND_SIZE,
-    backgroundColor: 'white',
-    // borderWidth: 1,
-    // borderColor: "#333",
-    position: 'absolute',
-    // top: -DOTSIZE /2,
-    // bottom: -DOTSIZE /2,
-  },
-  dotsContainer: {
-    // top: 50,
-    position: 'absolute',
-    marginBottom: CARDHEIGHT * 0.6
-
-  },
-  slidingDots: {
-    // justifyContent: 'center',
-    // alignSelf: 'center',
-    // inactiveDotOpacity: 0.9,
-    backgroundColor: 'white',
-  },
-  paging: {
-    backgroundColor: 'white',
   }
 })
